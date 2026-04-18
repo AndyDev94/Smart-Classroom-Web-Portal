@@ -92,20 +92,27 @@ export default function TimetableViewer() {
         <div style={{ display: 'flex', gap: '1rem' }}>
           {status === 'Pending' && (
             <>
-              <button className="btn btn-outline" style={{ color: 'var(--danger)', borderColor: 'var(--danger)' }} onClick={() => updateTimetableStatus(id, 'Rejected')}>
+              <button className="btn btn-outline no-print" style={{ color: 'var(--danger)', borderColor: 'var(--danger)' }} onClick={() => updateTimetableStatus(id, 'Rejected')}>
                 <XCircle size={18} /> Reject
               </button>
-              <button className="btn btn-primary" style={{ background: 'var(--success)', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }} onClick={() => updateTimetableStatus(id, 'Approved')}>
+              <button className="btn btn-primary no-print" style={{ background: 'var(--success)', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }} onClick={() => updateTimetableStatus(id, 'Approved')}>
                 <CheckCircle size={18} /> Approve Schedule
               </button>
             </>
           )}
           {status !== 'Pending' && (
-            <button className="btn btn-outline" style={{ color: 'var(--warning)', borderColor: 'var(--warning)' }} onClick={() => updateTimetableStatus(id, 'Pending')}>
+            <button className="btn btn-outline no-print" style={{ color: 'var(--warning)', borderColor: 'var(--warning)' }} onClick={() => updateTimetableStatus(id, 'Pending')}>
               <AlertTriangle size={18} /> Move to Review (Unlock)
             </button>
           )}
-          <button className="btn btn-secondary">
+          <button 
+            className="btn btn-secondary no-print" 
+            onClick={() => {
+              document.body.classList.add('body-landscape');
+              window.print();
+              document.body.classList.remove('body-landscape');
+            }}
+          >
              <Printer size={18} /> Print / Export
           </button>
         </div>

@@ -424,3 +424,84 @@ h1, h2, h3, h4, h5, h6 {
 .data-table tr:last-child td {
   border-bottom: none;
 }
+
+/* Printing & Exporting Engine */
+@media print {
+  @page { margin: 1.5cm; }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .sidebar, 
+  .mobile-menu-btn, 
+  .no-print, 
+  button.btn-secondary, 
+  button.btn-outline,
+  button.btn-primary,
+  .page-header button {
+    display: none !important;
+  }
+
+  .app-container {
+    display: block !important;
+  }
+
+  .main-content {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .page-wrapper {
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .glass-card, .glass-panel {
+    background: white !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    transform: none !important;
+    padding: 0 !important;
+  }
+
+  .gradient-text {
+    background: none !important;
+    -webkit-text-fill-color: black !important;
+    color: black !important;
+    font-size: 2rem !important;
+  }
+
+  .data-table {
+    border: 1px solid #ddd !important;
+    width: 100% !important;
+  }
+
+  .data-table th {
+    background: #f5f5f5 !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+  }
+
+  .data-table td {
+    border: 1px solid #eee !important;
+    color: #333 !important;
+  }
+
+  /* Specific orientation overrides */
+  .body-landscape {
+    @page { size: landscape; }
+  }
+
+  .body-portrait {
+    @page { size: portrait; }
+  }
+
+  /* Force full width on print */
+  .table-responsive {
+    overflow: visible !important;
+  }
+}

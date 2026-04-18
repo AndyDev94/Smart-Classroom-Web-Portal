@@ -12,7 +12,8 @@ import {
   Clock, 
   User, 
   CheckCircle, 
-  XCircle 
+  XCircle,
+  Printer
 } from 'lucide-react';
 
 export default function AttendanceReports() {
@@ -160,9 +161,21 @@ export default function AttendanceReports() {
 
   return (
     <div className="animate-fade-in" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div className="page-header">
-        <h1 className="gradient-text">Institutional Attendance Analytics</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>End-to-end oversight of student participation health</p>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <h1 className="gradient-text">Institutional Attendance Analytics</h1>
+          <p style={{ color: 'var(--text-secondary)' }}>End-to-end oversight of student participation health</p>
+        </div>
+        <button 
+          className="btn btn-secondary no-print"
+          onClick={() => {
+            document.body.classList.add('body-portrait');
+            window.print();
+            document.body.classList.remove('body-portrait');
+          }}
+        >
+          <Printer size={18} /> Print Report
+        </button>
       </div>
 
       {/* Analytics Overview Cards */}
@@ -197,7 +210,7 @@ export default function AttendanceReports() {
       </div>
 
       {/* Advanced Filters */}
-      <div className="glass-card" style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <div className="glass-card no-print" style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
         <div style={{ flex: 2, minWidth: '250px' }}>
           <label className="form-label" style={{ fontSize: '0.75rem' }}>Global Search</label>
           <div style={{ position: 'relative' }}>
