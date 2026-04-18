@@ -48,7 +48,7 @@ const CameraScanner = ({ itemId, batchStudents, onMatch }) => {
 };
 
 export default function Attendance() {
-  const { timetables, batches, students, logAttendance, attendance } = useAppData();
+  const { timetables, batches, students, logAttendance, attendance, settings } = useAppData();
   
   // Find an active/approved timetable to track attendance for
   const activeTimetable = timetables.find(t => t.status === 'Approved') || timetables[0];
@@ -59,6 +59,19 @@ export default function Attendance() {
   const [formState, setFormState] = useState({});
   const [barcodeInputs, setBarcodeInputs] = useState({});
   const [activeScanner, setActiveScanner] = useState(null);
+
+  const configItem = activeTimetable?.items.find(i => i.isConfig) || { 
+    slotDuration: settings?.slotDurationMinutes || 60, 
+    startTime: settings?.startTime || '09:00' 
+  };
+
+  const formatTime = (minutesAdded) => {
+    if (!configItem.startTime) return "";
+    const [h, m] = configItem.startTime.split(':').map(Number);
+    const date = new Date();
+    date.setHours(h, m + minutesAdded, 0);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
   if (!activeTimetable) {
     return (
@@ -170,7 +183,20 @@ export default function Attendance() {
         <div className="form-group" style={{ marginBottom: 0, flex: 1 }}>
           <label className="form-label">Select Slot</label>
           <select className="form-control" value={selectedSlot} onChange={e => setSelectedSlot(e.target.value)}>
-            {[0,1,2,3,4,5,6,7].map(s => <option key={s} value={s}>Slot {s + 1}</option>)}
+            {[...Array(settings?.slotsPerDay || 8)].map((_, s) => {
+              const sessions = activeTimetable.items.filter(i => i.day === selectedDay && i.slot === s && !i.isConfig);
+              const time = formatTime(s * (configItem.slotDuration || 60));
+              let label = `Slot ${s + 1} (${time})`;
+              
+              if (sessions.length > 0) {
+                const sessionDetails = sessions.map(sess => `${sess.subjectName} (${sess.facultyName})`).join(' | ');
+                label += ` - ${sessionDetails}`;
+              } else {
+                label += ` - [Empty]`;
+              }
+              
+              return <option key={s} value={s}>{label}</option>;
+            })}
           </select>
         </div>
       </div>

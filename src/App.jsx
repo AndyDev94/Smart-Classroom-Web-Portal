@@ -9,6 +9,7 @@ import MasterData from './pages/MasterData';
 import GenerateTimetable from './pages/GenerateTimetable';
 import TimetableViewer from './pages/TimetableViewer';
 import Attendance from './pages/Attendance';
+import AttendanceReports from './pages/AttendanceReports';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 
@@ -50,6 +51,7 @@ function App() {
               <Route path="master-data" element={<MasterData />} />
               <Route path="generate" element={<GenerateTimetable />} />
               <Route path="attendance" element={<Attendance />} />
+              <Route path="attendance-reports" element={<AttendanceReports />} />
               <Route path="timetable/:id" element={<TimetableViewer />} />
             </Route>
 

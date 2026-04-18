@@ -10,6 +10,7 @@ import {
   LogOut,
   GraduationCap,
   ClipboardCheck,
+  BarChart3,
   Sun,
   Moon,
   Menu,
@@ -89,6 +90,15 @@ const Sidebar = () => {
         >
           <ClipboardCheck size={20} />
           <span>Track Attendance</span>
+        </NavLink>
+
+        <NavLink 
+          to="/app/attendance-reports" 
+          className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+          onClick={() => setIsOpen(false)}
+        >
+          <BarChart3 size={20} />
+          <span>Attendance Analytics</span>
         </NavLink>
         
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
