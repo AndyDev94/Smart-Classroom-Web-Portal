@@ -21,6 +21,9 @@ The platform is built on a high-performance modern stack optimized for administr
 
 ### 1. Heuristic Scheduling Engine (`scheduler.js`)
 The "Brain" of the project. It uses a customized randomized heuristic approach to solve NP-complete scheduling problems.
+- **Advanced Scoping:** Generate schedules for the entire institution, or target a **Specific Batch** or **Specific Faculty** only.
+- **Cross-Schedule Collision Avoidance:** Optional "Respect Approved Timetables" toggle that prevents new generations from overlapping with existing institutional commitments (rooms/personnel).
+- **Temporal Flexibility:** Generate for the full working week or target a **Specific Day** for targeted fixes.
 - **Constraints Supported:**
     - **Fixed Slots:** Lock specific high-priority lectures to specific times manually.
     - **Break Slots:** Global institution-wide break times where no scheduling occurs.
@@ -33,8 +36,16 @@ A dual-mode attendance ledger designed for rapid classroom deployment:
 - **Optical Scanner:** Native WebRTC camera integration to scan barcode/QR ID badges.
 - **USB Scanner Support:** Native keystroke interception for rapid-fire hardware laser scanning.
 - **Real-time Commits:** Immediate Supabase synchronization for institutional reporting.
+- **Metada-Rich Navigation:** Slot selection now displays real-time lecture metadata (Subject, Time, Faculty) to ensure tracking accuracy.
 
-### 3. Responsive Theme Architecture
+### 3. Institutional Analytics Dashboard
+A data-rich intelligence layer for monitoring academic participation:
+- **Presence Ledger:** Aggregated attendance metrics for every student across all recorded sessions.
+- **Absence Tracking:** Statistical breakdown of attended vs. absent lectures.
+- **Student Performance Modal:** Click any student to view their **complete historical ledger** with date-stamped session status.
+- **Multi-Dimension Filtering:** Filter reports by Department, Batch, Faculty, or specific Subjects.
+
+### 4. Responsive Theme Architecture
 - **Light/Dark Synchronized:** Persistent theme provider with instantaneous CSS variable inversion.
 - **Mobile-First Layout:** Collapsible hamburger navigation and touch-scrollable tables optimized for use on $10.5"$ tablets or $6"$ smartphones.
 
