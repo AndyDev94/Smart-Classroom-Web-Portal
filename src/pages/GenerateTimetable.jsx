@@ -20,6 +20,12 @@ export default function GenerateTimetable() {
   const [fcDay, setFcDay] = useState(data.settings?.workingDays[0] || 'Monday');
   const [fcSlot, setFcSlot] = useState('0');
 
+  // Advanced Scope State
+  const [generationScope, setGenerationScope] = useState('all'); 
+  const [targetEntityId, setTargetEntityId] = useState('');
+  const [timelineScope, setTimelineScope] = useState('all');
+  const [respectExisting, setRespectExisting] = useState(true);
+
   const handleAddFixedClass = () => {
     if (!fcBatch || !fcSubject || !fcFaculty || !fcRoom || !fcDay || !fcSlot) return;
     setFixedClasses([
@@ -37,7 +43,20 @@ export default function GenerateTimetable() {
     
     // Simulate generation delay to look authentic
     setTimeout(() => {
-      const output = generateSchedules(data, 3, { slotDuration: parseInt(slotDuration), breakSlot, fixedClasses });
+      const activeTimetable = data.timetables.find(t => t.status === 'Approved');
+      const existingItems = respectExisting ? (activeTimetable?.items || []) : [];
+
+      const config = { 
+        slotDuration: parseInt(slotDuration), 
+        breakSlot, 
+        fixedClasses,
+        targetBatchId: generationScope === 'batch' ? targetEntityId : null,
+        targetFacultyId: generationScope === 'faculty' ? targetEntityId : null,
+        specificDay: timelineScope,
+        existingItems
+      };
+
+      const output = generateSchedules(data, 3, config);
       setResults(output);
       setIsGenerating(false);
     }, 1500);
@@ -101,13 +120,47 @@ export default function GenerateTimetable() {
             </select>
           </div>
 
+          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', marginBottom: '1.5rem' }}>
+            <h4 style={{ fontSize: '1rem', marginBottom: '1rem', color: 'var(--accent-secondary)' }}>Advanced Generation Scoping</h4>
+            
+            <div className="form-group">
+              <label className="form-label">Generation Scope</label>
+              <select className="form-control" value={generationScope} onChange={e => { setGenerationScope(e.target.value); setTargetEntityId(''); }}>
+                <option value="all">Entire Institution (Global)</option>
+                <option value="batch">Single Specific Batch</option>
+                <option value="faculty">Single Specific Faculty</option>
+              </select>
+            </div>
+
+            {generationScope !== 'all' && (
+              <div className="form-group animate-fade-in">
+                <label className="form-label">Select {generationScope === 'batch' ? 'Batch' : 'Faculty'}</label>
+                <select className="form-control" value={targetEntityId} onChange={e => setTargetEntityId(e.target.value)}>
+                  <option value="">-- Choose {generationScope === 'batch' ? 'Batch' : 'Faculty'} --</option>
+                  {generationScope === 'batch' 
+                    ? data.batches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)
+                    : data.faculties.map(f => <option key={f.id} value={f.id}>{f.name}</option>)
+                  }
+                </select>
+              </div>
+            )}
+
+            <div className="form-group">
+              <label className="form-label">Timeline Scope</label>
+              <select className="form-control" value={timelineScope} onChange={e => setTimelineScope(e.target.value)}>
+                <option value="all">Full Working Week</option>
+                {data.settings?.workingDays.map(d => <option key={d} value={d}>{d} Only</option>)}
+              </select>
+            </div>
+          </div>
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Strict Capacity Enforcement</span>
-              <input type="checkbox" defaultChecked />
+              <span>Respect Approved Timetables</span>
+              <input type="checkbox" checked={respectExisting} onChange={e => setRespectExisting(e.target.checked)} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Allow Back-to-Back Lectures</span>
+              <span>Strict Capacity Enforcement</span>
               <input type="checkbox" defaultChecked />
             </div>
           </div>

@@ -7,6 +7,10 @@ export function generateSchedules(data, numberOfOptions = 3, config = null) {
   const slotDuration = config?.slotDuration || settings.slotDurationMinutes || 60;
   const breakSlot = config?.breakSlot !== undefined && config?.breakSlot !== "" ? parseInt(config.breakSlot) : -1;
   const startTime = settings.startTime || '09:00';
+  const targetBatchId = config?.targetBatchId || null;
+  const targetFacultyId = config?.targetFacultyId || null;
+  const specificDay = config?.specificDay || 'all';
+  const existingItems = config?.existingItems || [];
   
   if (classrooms.length === 0 || batches.length === 0 || subjects.length === 0 || faculties.length === 0) {
     return { success: false, error: "Missing required master data (classrooms, batches, subjects, or faculties)." };
@@ -19,7 +23,7 @@ export function generateSchedules(data, numberOfOptions = 3, config = null) {
     const errors = [];
     
     // Create an empty grid
-    const days = settings.workingDays;
+    const days = specificDay === 'all' ? settings.workingDays : [specificDay];
     const slots = Array.from({ length: settings.slotsPerDay }, (_, i) => i);
 
     // Track resource usage to check for collisions: Day -> Slot -> EntityID -> boolean
@@ -38,17 +42,37 @@ export function generateSchedules(data, numberOfOptions = 3, config = null) {
       });
     });
 
+    // Block existing items (Collision Avoidance)
+    existingItems.forEach(item => {
+      if (item.isConfig) return;
+      if (facultyUsage[item.day] && facultyUsage[item.day][item.slot]) {
+        facultyUsage[item.day][item.slot][item.facultyId] = true;
+        batchUsage[item.day][item.slot][item.batchId] = true;
+        roomUsage[item.day][item.slot][item.roomId] = true;
+      }
+    });
+
     // We must schedule: every batch needs 'classesPerWeek' of each of their 'subjects'
     const demands = []; // e.g., { batchId, subjectId, remainingClasses: 3 }
     
     batches.forEach(batch => {
+      // Filtering for targeted batch scope
+      if (targetBatchId && batch.id !== targetBatchId) return;
+
       batch.subjects.forEach(subId => {
         const subjectObj = subjects.find(s => s.id === subId);
+        
+        // Filtering for targeted faculty scope
+        if (targetFacultyId) {
+          const isTaughtByTarget = faculties.find(f => f.id === targetFacultyId)?.subjects.includes(subId);
+          if (!isTaughtByTarget) return;
+        }
+
         if (subjectObj) {
           demands.push({
             batchId: batch.id,
             subjectId: subId,
-            remainingClasses: subjectObj.classesPerWeek,
+            remainingClasses: specificDay === 'all' ? subjectObj.classesPerWeek : 1, // If only one day, just do 1 class
             batchCapacity: batch.studentCount
           });
         }
