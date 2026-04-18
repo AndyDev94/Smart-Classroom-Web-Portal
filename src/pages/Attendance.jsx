@@ -48,7 +48,7 @@ const CameraScanner = ({ itemId, batchStudents, onMatch }) => {
 };
 
 export default function Attendance() {
-  const { timetables, batches, students, logAttendance, attendance, settings } = useAppData();
+  const { timetables, batches, students, logAttendance, attendance, settings, subjects, faculties } = useAppData();
   
   // Find an active/approved timetable to track attendance for
   const activeTimetable = timetables.find(t => t.status === 'Approved') || timetables[0];
@@ -189,7 +189,11 @@ export default function Attendance() {
               let label = `Slot ${s + 1} (${time})`;
               
               if (sessions.length > 0) {
-                const sessionDetails = sessions.map(sess => `${sess.subjectName} (${sess.facultyName})`).join(' | ');
+                const sessionDetails = sessions.map(sess => {
+                  const subject = subjects.find(sub => sub.id === sess.subjectId);
+                  const faculty = faculties.find(f => f.id === sess.facultyId);
+                  return `${subject?.name || 'Unknown'} (${faculty?.name || 'Unknown'})`;
+                }).join(' | ');
                 label += ` - ${sessionDetails}`;
               } else {
                 label += ` - [Empty]`;

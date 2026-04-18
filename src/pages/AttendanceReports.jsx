@@ -21,12 +21,15 @@ export default function AttendanceReports() {
         item => item.day === entry.day && item.slot === entry.slot && item.batchId === entry.batch_id
       );
 
+      const subject = subjects.find(s => s.id === scheduleItem?.subjectId);
+      const faculty = faculties.find(f => f.id === scheduleItem?.facultyId);
+
       return {
         ...entry,
         batchName: batch?.name || 'Unknown Batch',
         deptId: batch?.department_id,
-        subjectName: scheduleItem?.subjectName || 'N/A',
-        facultyName: scheduleItem?.facultyName || 'N/A'
+        subjectName: subject?.name || 'N/A',
+        facultyName: faculty?.name || 'N/A'
       };
     });
   }, [attendance, batches, timetables]);
