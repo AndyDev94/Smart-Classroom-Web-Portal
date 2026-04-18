@@ -1,6 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAppData } from '../context/AppDataContext';
-import { CheckCircle, Users } from 'lucide-react';
+import { CheckCircle, Users, Camera } from 'lucide-react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
+
+const CameraScanner = ({ itemId, batchStudents, onMatch }) => {
+  const latestBatchStudents = useRef(batchStudents);
+  const latestOnMatch = useRef(onMatch);
+
+  useEffect(() => {
+    latestBatchStudents.current = batchStudents;
+    latestOnMatch.current = onMatch;
+  }, [batchStudents, onMatch]);
+
+  useEffect(() => {
+    const scanner = new Html5QrcodeScanner(
+      `qr-reader-${itemId}`,
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      false
+    );
+
+    scanner.render(
+      (decodedText) => {
+        if (!decodedText) return;
+        const student = latestBatchStudents.current.find(s => 
+          (s.roll_number || "").toLowerCase() === decodedText.toLowerCase() ||
+          (s.name || "").toLowerCase() === decodedText.toLowerCase()
+        );
+        if (student) {
+          latestOnMatch.current(student.id);
+        } else {
+          console.warn("Student PRN not matched:", decodedText);
+        }
+      },
+      (error) => {
+        // quiet fail on individual scan frames
+      }
+    );
+
+    return () => {
+      scanner.clear().catch(error => {
+        console.error("Failed to clear html5QrcodeScanner. ", error);
+      });
+    };
+  }, [itemId]);
+
+  return <div id={`qr-reader-${itemId}`} style={{ width: '100%', maxWidth: '400px', margin: '1rem auto' }}></div>;
+};
 
 export default function Attendance() {
   const { timetables, batches, students, logAttendance, attendance } = useAppData();
@@ -13,6 +58,7 @@ export default function Attendance() {
 
   const [formState, setFormState] = useState({});
   const [barcodeInputs, setBarcodeInputs] = useState({});
+  const [activeScanner, setActiveScanner] = useState(null);
 
   if (!activeTimetable) {
     return (
@@ -39,6 +85,16 @@ export default function Attendance() {
       } else {
         return { ...prev, [itemId]: [...currentList, studentId] };
       }
+    });
+  };
+
+  const handleCameraMatch = (itemId, studentId) => {
+    setFormState(prev => {
+      const currentList = prev[itemId] || [];
+      if (!currentList.includes(studentId)) {
+        return { ...prev, [itemId]: [...currentList, studentId] };
+      }
+      return prev;
     });
   };
 
@@ -158,17 +214,35 @@ export default function Attendance() {
 
                   {batchStudents.length > 0 && (
                      <div style={{ background: 'rgba(0,0,0,0.2)', padding: '1.25rem', borderRadius: '0.5rem', marginBottom: '1.5rem', border: '1px dashed rgba(255,255,255,0.1)' }}>
-                       <div style={{ flex: 1 }}>
-                         <label className="form-label" style={{ fontSize: '0.85rem', color: 'var(--accent-secondary)' }}>Fast-Track with Barcode / PRN Scanner</label>
-                         <input 
-                           type="text" 
-                           className="form-control" 
-                           placeholder="Scan student ID card here to instantly mark Present..." 
-                           value={barcodeInputs[item.id] || ''}
-                           onChange={e => setBarcodeInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
-                           onKeyDown={e => handleBarcodeKeyDown(e, item.id, batchStudents)}
-                         />
+                       <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', marginBottom: activeScanner === item.id ? '1rem' : '0' }}>
+                         <div style={{ flex: 1 }}>
+                           <label className="form-label" style={{ fontSize: '0.85rem', color: 'var(--accent-secondary)' }}>Fast-Track with Barcode / PRN Scanner</label>
+                           <input 
+                             type="text" 
+                             className="form-control" 
+                             placeholder="Scan student ID card via USB scanner here..." 
+                             value={barcodeInputs[item.id] || ''}
+                             onChange={e => setBarcodeInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
+                             onKeyDown={e => handleBarcodeKeyDown(e, item.id, batchStudents)}
+                           />
+                         </div>
+                         <button 
+                           className={`btn ${activeScanner === item.id ? 'btn-danger' : 'btn-secondary'}`}
+                           onClick={() => setActiveScanner(activeScanner === item.id ? null : item.id)}
+                         >
+                           <Camera size={18} /> {activeScanner === item.id ? "Close Camera" : "Use Camera"}
+                         </button>
                        </div>
+                       
+                       {activeScanner === item.id && (
+                         <div style={{ background: 'var(--bg-primary)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
+                           <CameraScanner 
+                             itemId={item.id} 
+                             batchStudents={batchStudents} 
+                             onMatch={(studentId) => handleCameraMatch(item.id, studentId)} 
+                           />
+                         </div>
+                       )}
                      </div>
                   )}
 

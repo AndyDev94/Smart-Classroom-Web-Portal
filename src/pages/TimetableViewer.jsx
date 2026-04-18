@@ -100,6 +100,11 @@ export default function TimetableViewer() {
               </button>
             </>
           )}
+          {status !== 'Pending' && (
+            <button className="btn btn-outline" style={{ color: 'var(--warning)', borderColor: 'var(--warning)' }} onClick={() => updateTimetableStatus(id, 'Pending')}>
+              <AlertTriangle size={18} /> Move to Review (Unlock)
+            </button>
+          )}
           <button className="btn btn-secondary">
              <Printer size={18} /> Print / Export
           </button>

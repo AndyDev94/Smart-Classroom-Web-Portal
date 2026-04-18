@@ -22,7 +22,7 @@ export default function MasterData() {
         <p style={{ color: 'var(--text-secondary)' }}>Manage the resources for schedule generation</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid var(--border-color)', marginBottom: '2rem' }}>
+      <div className="tabs-scrollable">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -92,22 +92,24 @@ function ClassroomsTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Existing Classrooms ({classrooms.length})</h3>
-        <table className="data-table">
-          <thead><tr><th>Name</th><th>Capacity</th><th>Action</th></tr></thead>
-          <tbody>
-            {classrooms.map(c => (
-              <tr key={c.id}>
-                <td>{c.name}</td>
-                <td>{c.capacity}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeClassroom(c.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Name</th><th>Capacity</th><th>Action</th></tr></thead>
+            <tbody>
+              {classrooms.map(c => (
+                <tr key={c.id}>
+                  <td>{c.name}</td>
+                  <td>{c.capacity}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeClassroom(c.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -172,23 +174,25 @@ function FacultiesTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Existing Faculties ({faculties.length})</h3>
-        <table className="data-table">
-          <thead><tr><th>Name</th><th>Subjects Count</th><th>Leaves</th><th>Action</th></tr></thead>
-          <tbody>
-            {faculties.map(f => (
-              <tr key={f.id}>
-                <td>{f.name}</td>
-                <td>{f.subjects.length} subjects</td>
-                <td>{f.avgLeaves}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeFaculty(f.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Name</th><th>Subjects Count</th><th>Leaves</th><th>Action</th></tr></thead>
+            <tbody>
+              {faculties.map(f => (
+                <tr key={f.id}>
+                  <td>{f.name}</td>
+                  <td>{f.subjects.length} subjects</td>
+                  <td>{f.avgLeaves}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeFaculty(f.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -231,23 +235,25 @@ function SubjectsTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Existing Subjects ({subjects.length})</h3>
-        <table className="data-table">
-          <thead><tr><th>Code</th><th>Name</th><th>Classes/Wk</th><th>Action</th></tr></thead>
-          <tbody>
-            {subjects.map(s => (
-              <tr key={s.id}>
-                <td>{s.code}</td>
-                <td>{s.name}</td>
-                <td>{s.classesPerWeek}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeSubject(s.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Code</th><th>Name</th><th>Classes/Wk</th><th>Action</th></tr></thead>
+            <tbody>
+              {subjects.map(s => (
+                <tr key={s.id}>
+                  <td>{s.code}</td>
+                  <td>{s.name}</td>
+                  <td>{s.classesPerWeek}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeSubject(s.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -317,23 +323,25 @@ function BatchesTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Existing Batches ({batches.length})</h3>
-        <table className="data-table">
-          <thead><tr><th>Name</th><th>Size</th><th>Subjects</th><th>Action</th></tr></thead>
-          <tbody>
-            {batches.map(b => (
-              <tr key={b.id}>
-                <td>{b.name}</td>
-                <td>{b.studentCount}</td>
-                <td>{b.subjects.length}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeBatch(b.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Name</th><th>Size</th><th>Subjects</th><th>Action</th></tr></thead>
+            <tbody>
+              {batches.map(b => (
+                <tr key={b.id}>
+                  <td>{b.name}</td>
+                  <td>{b.studentCount}</td>
+                  <td>{b.subjects.length}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeBatch(b.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -366,21 +374,23 @@ function DepartmentsTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Existing Departments</h3>
-        <table className="data-table">
-          <thead><tr><th>Name</th><th>Action</th></tr></thead>
-          <tbody>
-            {departments.map(d => (
-              <tr key={d.id}>
-                <td>{d.name}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeDepartment(d.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Name</th><th>Action</th></tr></thead>
+            <tbody>
+              {departments.map(d => (
+                <tr key={d.id}>
+                  <td>{d.name}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeDepartment(d.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -423,22 +433,24 @@ function ShiftsTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Existing Shifts</h3>
-        <table className="data-table">
-          <thead><tr><th>Name</th><th>Timing</th><th>Action</th></tr></thead>
-          <tbody>
-            {shifts.map(s => (
-              <tr key={s.id}>
-                <td>{s.name}</td>
-                <td>{s.startTime} - {s.endTime}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeShift(s.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Name</th><th>Timing</th><th>Action</th></tr></thead>
+            <tbody>
+              {shifts.map(s => (
+                <tr key={s.id}>
+                  <td>{s.name}</td>
+                  <td>{s.startTime} - {s.endTime}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeShift(s.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -491,23 +503,25 @@ function StudentsTab() {
       </div>
       <div className="glass-card">
         <h3 style={{ marginBottom: '1.5rem' }}>Registered Students ({students.length})</h3>
-        <table className="data-table">
-          <thead><tr><th>Roll #</th><th>Name</th><th>Batch</th><th>Action</th></tr></thead>
-          <tbody>
-            {students.map(s => (
-              <tr key={s.id}>
-                <td>{s.roll_number}</td>
-                <td>{s.name}</td>
-                <td>{getBatchName(s.batch_id)}</td>
-                <td>
-                  <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeStudent(s.id)}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead><tr><th>Roll #</th><th>Name</th><th>Batch</th><th>Action</th></tr></thead>
+            <tbody>
+              {students.map(s => (
+                <tr key={s.id}>
+                  <td>{s.roll_number}</td>
+                  <td>{s.name}</td>
+                  <td>{getBatchName(s.batch_id)}</td>
+                  <td>
+                    <button className="btn btn-danger" style={{ padding: '0.4rem', borderRadius: '0.25rem' }} onClick={() => removeStudent(s.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -10,12 +11,15 @@ import {
   GraduationCap,
   ClipboardCheck,
   Sun,
-  Moon
+  Moon,
+  Menu,
+  X
 } from 'lucide-react';
 
 const Sidebar = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -28,7 +32,7 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar glass-panel" style={{ margin: '1rem', height: 'calc(100vh - 2rem)', border: '1px solid var(--glass-border)' }}>
-      <div className="sidebar-header">
+      <div className="sidebar-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ padding: '0.5rem', background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))', borderRadius: '0.5rem' }}>
             <GraduationCap size={24} color="white" />
@@ -38,12 +42,23 @@ const Sidebar = () => {
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>Timetable Scheduler</p>
           </div>
         </div>
+        <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid var(--border-color)', background: 'rgba(0,0,0,0.1)' }}>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Welcome,</div>
+        <div style={{ fontWeight: '600', color: 'var(--text-primary)', wordBreak: 'break-all' }}>
+          {user?.user_metadata?.name || user?.email?.split('@')[0] || "Administrator"}
+        </div>
       </div>
       
-      <nav className="sidebar-nav">
+      <nav className={`sidebar-nav ${isOpen ? 'mobile-open' : ''}`}>
         <NavLink 
           to="/app/dashboard" 
           className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+          onClick={() => setIsOpen(false)}
         >
           <LayoutDashboard size={20} />
           <span>Dashboard</span>
@@ -52,6 +67,7 @@ const Sidebar = () => {
         <NavLink 
           to="/app/master-data" 
           className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+          onClick={() => setIsOpen(false)}
         >
           <Database size={20} />
           <span>Master Data</span>
@@ -60,6 +76,7 @@ const Sidebar = () => {
         <NavLink 
           to="/app/generate" 
           className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+          onClick={() => setIsOpen(false)}
         >
           <Wand2 size={20} />
           <span>Generate Schedule</span>
@@ -68,6 +85,7 @@ const Sidebar = () => {
         <NavLink 
           to="/app/attendance" 
           className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+          onClick={() => setIsOpen(false)}
         >
           <ClipboardCheck size={20} />
           <span>Track Attendance</span>
