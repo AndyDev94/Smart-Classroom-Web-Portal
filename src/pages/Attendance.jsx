@@ -169,18 +169,18 @@ export default function Attendance() {
         <p style={{ color: 'var(--text-secondary)' }}>Track individual student participation across all active sessions</p>
       </div>
 
-      <div className="glass-card" style={{ marginBottom: '2rem', display: 'flex', gap: '2rem', alignItems: 'center' }}>
+      <div className="glass-card grid-3" style={{ marginBottom: '2rem', alignItems: 'center' }}>
         <div style={{ flex: 1 }}>
           <label className="form-label">Active Timetable</label>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{activeTimetable.name}</div>
         </div>
-        <div className="form-group" style={{ marginBottom: 0, flex: 1 }}>
+        <div className="form-group" style={{ marginBottom: 0 }}>
           <label className="form-label">Select Day</label>
           <select className="form-control" value={selectedDay} onChange={e => setSelectedDay(e.target.value)}>
             {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(d => <option key={d} value={d}>{d}</option>)}
           </select>
         </div>
-        <div className="form-group" style={{ marginBottom: 0, flex: 1 }}>
+        <div className="form-group" style={{ marginBottom: 0 }}>
           <label className="form-label">Select Slot</label>
           <select className="form-control" value={selectedSlot} onChange={e => setSelectedSlot(e.target.value)}>
             {[...Array(settings?.slotsPerDay || 8)].map((_, s) => {

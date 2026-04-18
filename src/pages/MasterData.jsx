@@ -22,21 +22,22 @@ export default function MasterData() {
         <p style={{ color: 'var(--text-secondary)' }}>Manage the resources for schedule generation</p>
       </div>
 
-      <div className="tabs-scrollable">
+      <div className="tabs-scrollable" style={{ marginBottom: '1.5rem' }}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: '1rem 2rem',
+              padding: '0.75rem 1.25rem',
               background: 'transparent',
               border: 'none',
               borderBottom: activeTab === tab.id ? '3px solid var(--accent-primary)' : '3px solid transparent',
               color: activeTab === tab.id ? 'var(--text-primary)' : 'var(--text-secondary)',
               cursor: 'pointer',
-              fontWeight: '500',
+              fontWeight: '600',
               transition: 'all 0.2s',
-              fontSize: '1rem'
+              fontSize: '0.9rem',
+              whiteSpace: 'nowrap'
             }}
           >
             {tab.label}

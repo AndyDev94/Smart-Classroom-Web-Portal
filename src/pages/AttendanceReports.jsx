@@ -210,8 +210,8 @@ export default function AttendanceReports() {
       </div>
 
       {/* Advanced Filters */}
-      <div className="glass-card no-print" style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        <div style={{ flex: 2, minWidth: '250px' }}>
+      <div className="glass-card no-print" style={{ marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+        <div style={{ gridColumn: 'span 2', minWidth: '100%' }}>
           <label className="form-label" style={{ fontSize: '0.75rem' }}>Global Search</label>
           <div style={{ position: 'relative' }}>
             <Search size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
@@ -225,28 +225,28 @@ export default function AttendanceReports() {
             />
           </div>
         </div>
-        <div style={{ flex: 1, minWidth: '150px' }}>
+        <div>
           <label className="form-label" style={{ fontSize: '0.75rem' }}>Department</label>
           <select className="form-control" value={deptFilter} onChange={e => { setDeptFilter(e.target.value); setBatchFilter('all'); }}>
             <option value="all">All Departments</option>
             {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
           </select>
         </div>
-        <div style={{ flex: 1, minWidth: '150px' }}>
+        <div>
           <label className="form-label" style={{ fontSize: '0.75rem' }}>Batch</label>
           <select className="form-control" value={batchFilter} onChange={e => setBatchFilter(e.target.value)}>
             <option value="all">All Batches</option>
             {batches.filter(b => deptFilter === 'all' || b.department_id === deptFilter).map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
           </select>
         </div>
-        <div style={{ flex: 1, minWidth: '150px' }}>
+        <div>
           <label className="form-label" style={{ fontSize: '0.75rem' }}>Faculty</label>
           <select className="form-control" value={facultyFilter} onChange={e => setFacultyFilter(e.target.value)}>
             <option value="all">All Faculty</option>
             {faculties.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
           </select>
         </div>
-        <div style={{ flex: 1, minWidth: '150px' }}>
+        <div>
           <label className="form-label" style={{ fontSize: '0.75rem' }}>Subject</label>
           <select className="form-control" value={subjectFilter} onChange={e => setSubjectFilter(e.target.value)}>
             <option value="all">All Subjects</option>
