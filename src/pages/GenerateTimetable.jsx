@@ -199,7 +199,7 @@ export default function GenerateTimetable() {
             )}
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1rem', borderRadius: '0.5rem' }}>
-              <div className="grid-2" style={{ gap: '0.75rem' }}>
+              <div className="grid-2 grid-mobile-1" style={{ gap: '0.75rem' }}>
                 <select className="form-control" style={{ padding: '0.5rem', fontSize: '0.85rem' }} value={fcBatch} onChange={e => { setFcBatch(e.target.value); setFcSubject(''); }}>
                   <option value="">Select Batch/Class</option>
                   {data.batches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}

@@ -92,12 +92,12 @@ export default function Dashboard() {
 
   return (
     <div className="animate-fade-in" style={{ position: 'relative' }}>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="page-header">
         <div>
           <h1 className="gradient-text">Institution Dashboard</h1>
           <p style={{ color: 'var(--text-secondary)' }}>Welcome to the Central Command Center</p>
         </div>
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ textAlign: 'left' }}>
            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.2rem', fontWeight: 'bold' }}>
              <Clock size={20} className="gradient-text" /> {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
            </div>
