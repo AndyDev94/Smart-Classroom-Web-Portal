@@ -32,9 +32,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', background: 'var(--bg-primary)' }}>
+    <div className="auth-container">
       {/* Left side banner */}
-      <div style={{ flex: 1, hidden: 'true', background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1))', display: 'flex', flexDirection: 'column', padding: '4rem', justifyContent: 'center', borderRight: '1px solid var(--border-color)' }}>
+      <div className="auth-banner">
         <h1 style={{ fontSize: '3.5rem', lineHeight: '1.2', marginBottom: '1.5rem' }}>
           Welcome Back to<br />
           <span className="gradient-text glow-effect" style={{ display: 'inline-block' }}>SmartClass</span>
@@ -45,8 +45,8 @@ export default function LoginPage() {
       </div>
 
       {/* Right side form */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-        <div style={{ width: '100%', maxWidth: '450px' }} className="animate-fade-in">
+      <div className="auth-form-side">
+        <div style={{ width: '100%', maxWidth: '400px' }} className="animate-fade-in">
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2.5rem', justifyContent: 'center' }}>
             <Sparkles className="gradient-text" size={32} />

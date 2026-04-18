@@ -33,9 +33,9 @@ export default function SignupPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', background: 'var(--bg-primary)' }}>
+    <div className="auth-container">
       {/* Right side banner */}
-      <div style={{ flex: 1, hidden: 'true', background: 'linear-gradient(225deg, rgba(236,72,153,0.1), rgba(168,85,247,0.1))', display: 'flex', flexDirection: 'column', padding: '4rem', justifyContent: 'center', borderLeft: '1px solid var(--border-color)' }}>
+      <div className="auth-banner" style={{ background: 'linear-gradient(225deg, rgba(236,72,153,0.1), rgba(168,85,247,0.1))', borderLeft: '1px solid var(--border-color)', borderRight: 'none' }}>
         <h1 style={{ fontSize: '3.5rem', lineHeight: '1.2', marginBottom: '1.5rem' }}>
           Streamline Your<br />
           <span className="gradient-text glow-effect" style={{ display: 'inline-block' }}>Campus Operations</span>
@@ -46,8 +46,8 @@ export default function SignupPage() {
       </div>
 
       {/* Left side form */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', order: -1 }}>
-        <div style={{ width: '100%', maxWidth: '450px' }} className="animate-fade-in">
+      <div className="auth-form-side" style={{ order: -1 }}>
+        <div style={{ width: '100%', maxWidth: '400px' }} className="animate-fade-in">
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2.5rem', justifyContent: 'center' }}>
             <Sparkles className="gradient-text" size={32} />

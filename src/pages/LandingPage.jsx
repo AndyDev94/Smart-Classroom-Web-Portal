@@ -18,26 +18,26 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', textAlign: 'center' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 1.5rem', textAlign: 'center' }}>
         <div className="animate-fade-in" style={{ maxWidth: '800px', width: '100%' }}>
           <div style={{ display: 'inline-block', padding: '0.5rem 1rem', background: 'rgba(99, 102, 241, 0.1)', border: '1px solid rgba(99, 102, 241, 0.2)', borderRadius: '999px', color: 'var(--accent-primary)', fontWeight: '600', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
             v2.0 • AI-Powered Scheduling
           </div>
           
-          <h1 style={{ fontSize: '4rem', lineHeight: '1.1', marginBottom: '1.5rem' }}>
+          <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', lineHeight: '1.1', marginBottom: '1.5rem' }}>
             Intelligent Timetables <br />
             <span className="gradient-text glow-effect" style={{ display: 'inline-block' }}>Without the Hassle.</span>
           </h1>
           
-          <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: '1.6' }}>
+          <p style={{ fontSize: 'clamp(1rem, 4vw, 1.25rem)', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: '1.6' }}>
             An advanced constraint-satisfaction engine designed for Higher Education institutions to effortlessly generate clash-free, optimized class schedules.
           </p>
 
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <button className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.1rem', borderRadius: 'var(--radius-xl)' }} onClick={() => navigate('/signup')}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.1rem', borderRadius: 'var(--radius-xl)', minWidth: '220px' }} onClick={() => navigate('/signup')}>
               Get Started <ArrowRight size={20} />
             </button>
-            <button className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.1rem', borderRadius: 'var(--radius-xl)' }} onClick={() => navigate('/login')}>
+            <button className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.1rem', borderRadius: 'var(--radius-xl)', minWidth: '220px' }} onClick={() => navigate('/login')}>
               Sign In Existing
             </button>
           </div>
