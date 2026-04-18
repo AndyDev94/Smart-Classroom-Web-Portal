@@ -16,6 +16,7 @@ export const AppDataProvider = ({ children }) => {
   const [attendance, setAttendance] = useState([]);
   const [students, setStudents] = useState([]);
   const [settings, setSettings] = useState(null);
+  const [substitutions, setSubstitutions] = useState([]);
   
   const [isLoading, setIsLoading] = useState(true);
 
@@ -135,6 +136,11 @@ export const AppDataProvider = ({ children }) => {
     setSettings(newSettings);
   };
 
+  const assignEmergencyFaculty = (sub) => {
+    // sub: { day, slot, roomId, batchId, originalFacultyId, substituteFacultyId, date }
+    setSubstitutions(prev => [...prev.filter(s => s.roomId !== sub.roomId || s.slot !== sub.slot || s.day !== sub.day), sub]);
+  };
+
   const value = {
     isLoading,
     classrooms, addClassroom, removeClassroom,
@@ -146,7 +152,8 @@ export const AppDataProvider = ({ children }) => {
     shifts, addShift, removeShift,
     students, addStudent, removeStudent,
     attendance, logAttendance,
-    settings, updateSettings
+    settings, updateSettings,
+    substitutions, assignEmergencyFaculty
   };
 
   return (

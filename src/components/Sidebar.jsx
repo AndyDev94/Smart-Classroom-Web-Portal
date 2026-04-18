@@ -17,10 +17,9 @@ import {
   X
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -32,7 +31,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="sidebar glass-panel" style={{ margin: '1rem', height: 'calc(100vh - 2rem)', border: '1px solid var(--glass-border)' }}>
+    <aside className={`sidebar glass-panel ${isOpen ? 'mobile-open' : ''}`} style={{ margin: '1rem', height: 'calc(100vh - 2rem)', border: '1px solid var(--glass-border)' }}>
       <div className="sidebar-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ padding: '0.5rem', background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))', borderRadius: '0.5rem' }}>
@@ -43,8 +42,8 @@ const Sidebar = () => {
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>Timetable Scheduler</p>
           </div>
         </div>
-        <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="mobile-menu-btn" onClick={() => setIsOpen(false)} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}>
+          <X size={24} />
         </button>
       </div>
 
@@ -55,7 +54,7 @@ const Sidebar = () => {
         </div>
       </div>
       
-      <nav className={`sidebar-nav ${isOpen ? 'mobile-open' : ''}`}>
+      <nav className={`sidebar-nav`}>
         <NavLink 
           to="/app/dashboard" 
           className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}

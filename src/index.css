@@ -112,6 +112,7 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
+  position: relative;
 }
 
 .page-header {
@@ -239,6 +240,8 @@ h1, h2, h3, h4, h5, h6 {
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
 }
 
 .sidebar-header {
@@ -315,9 +318,15 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 2rem;
   overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
   -webkit-overflow-scrolling: touch;
   padding-bottom: 0.5rem;
   white-space: nowrap;
+}
+
+.tabs-scrollable::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 @media (max-width: 1024px) {
@@ -327,13 +336,45 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 768px) {
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .app-container { flex-direction: column; }
-  .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
-  .sidebar-nav { display: none; padding: 1rem; }
-  .sidebar-nav.mobile-open { display: flex; }
+  
+  .app-container { 
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  .sidebar { 
+    position: fixed; 
+    left: 0;
+    top: 0;
+    height: 100vh !important; 
+    margin: 0 !important;
+    border-radius: 0 !important;
+    transform: translateX(-100%);
+  }
+  
+  .sidebar-nav.mobile-open { 
+    display: flex;
+  }
+  
+  aside.sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(0,0,0,0.8);
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    padding: 1rem;
+  }
+  
   .mobile-menu-btn { display: block; }
-  .page-wrapper { padding: 1rem; }
-  .glass-card { padding: 1.25rem; }
+  .page-wrapper { padding: 1rem; padding-top: 4rem; }
+  .glass-card { padding: 1rem; }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
 }
 
 /* Animations */
