@@ -324,7 +324,7 @@ export default function Attendance() {
                       onClick={() => submitAttendance(item)}
                       disabled={batchStudents.length === 0}
                     >
-                      <CheckCircle size={18} /> Commit Ledger to Database
+                      <CheckCircle size={18} /> Mark Attendance to the Database Ledger
                     </button>
                   </div>
                 </div>
