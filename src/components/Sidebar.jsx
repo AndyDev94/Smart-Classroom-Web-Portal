@@ -14,7 +14,8 @@ import {
   Sun,
   Moon,
   Menu,
-  X
+  X,
+  BookOpen
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
@@ -98,6 +99,15 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         >
           <BarChart3 size={20} />
           <span>Attendance Analytics</span>
+        </NavLink>
+
+        <NavLink 
+          to="/app/guide" 
+          className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+          onClick={() => setIsOpen(false)}
+        >
+          <BookOpen size={20} />
+          <span>Platform Guide</span>
         </NavLink>
         
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

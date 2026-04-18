@@ -12,6 +12,7 @@ import Attendance from './pages/Attendance';
 import AttendanceReports from './pages/AttendanceReports';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import Guide from './pages/Guide';
 
 // Simple protected route helper
 const ProtectedRoute = ({ children }) => {
@@ -53,6 +54,7 @@ function App() {
               <Route path="attendance" element={<Attendance />} />
               <Route path="attendance-reports" element={<AttendanceReports />} />
               <Route path="timetable/:id" element={<TimetableViewer />} />
+              <Route path="guide" element={<Guide />} />
             </Route>
 
             {/* Default Catch-All */}
