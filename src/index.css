@@ -529,13 +529,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #333 !important;
   }
 
-  /* Specific orientation overrides */
-  .body-landscape {
-    @page { size: landscape; }
-  }
-
-  .body-portrait {
-    @page { size: portrait; }
+  /* Orientation specific page setup is handled by browser dialog, 
+     but we ensure content fills the width */
+  @page {
+    margin: 1cm;
   }
 
   /* Force full width on print */
